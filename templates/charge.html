@@ -273,8 +273,11 @@
                 if (result.success) {
                     overlayLabel.innerHTML = 'Información cargada correctamente.<br>¿Desea cargar otro registro?';
                     overlayButtons.innerHTML = `
+                    <div class="botones">
                         <button onclick="location.href='/charge'" class="resolver azulito" style="font-size: 20px; font-weight: bold; margin-top: 20px;">Nuevo Registro</button>
-                    `;
+                        <button onclick="location.href='/'" class="resolver azulito" style="font-size: 20px; font-weight: bold; margin-top: 20px;">Volver</button>
+                    </div>
+                        `;
                 } else {
                     overlayLabel.textContent = 'Se produjo un error, intente nuevamente.';
                     overlayButtons.innerHTML = '';
