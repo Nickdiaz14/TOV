@@ -36,13 +36,13 @@ def get_info():
     categories_list = [list(category) for category in cursor.fetchall()]
 
     quantity_kid = float('inf')
-    price_kid = float('inf')
+    price_kid = 0
     quantity_adult = float('inf')
-    price_adult = float('inf')
+    price_adult = 0
     quantity_youth = float('inf')
-    price_youth = float('inf')
+    price_youth = 0
     quantity_adolescent = float('inf')
-    price_adolescent = float('inf')
+    price_adolescent = 0
 
     for i in range(len(categories_list)):
         cat_id = categories_list[i][0]
@@ -51,29 +51,33 @@ def get_info():
             for category in categories_list:
                 if category[0] in kids_ids:
                     quantity_kid = min(quantity_kid, category[4])
-                    price_kid += category[3]
+                    price_kid += int(category[3])
             categories_list[i][4] = quantity_kid
+            categories_list[i][3] = price_kid
 
         elif cat_id == 2:
             for category in categories_list:
                 if category[0] in adolescent_ids:
                     quantity_adolescent = min(quantity_adolescent, category[4])
-                    price_adolescent += category[3]
+                    price_adolescent += int(category[3])
             categories_list[i][4] = quantity_adolescent
+            categories_list[i][3] = price_adolescent
 
         elif cat_id == 3:
             for category in categories_list:
                 if category[0] in adult_ids:
                     quantity_adult = min(quantity_adult, category[4])
-                    price_adult += category[3]
+                    price_adult += int(category[3])
             categories_list[i][4] = quantity_adult
+            categories_list[i][3] = price_adult
 
         elif cat_id == 4:
             for category in categories_list:
                 if category[0] in youth_ids:
                     quantity_youth = min(quantity_youth, category[4])
-                    price_youth += category[3]
+                    price_youth += int(category[3])
             categories_list[i][4] = quantity_youth
+            categories_list[i][3] = price_youth
                 
     cursor.close()
     connection.close()
@@ -146,13 +150,13 @@ def table_inv_page():
     categories_list = [list(category) for category in cursor.fetchall()]
 
     quantity_kid = float('inf')
-    price_kid = float('inf')
+    price_kid = 0
     quantity_adult = float('inf')
-    price_adult = float('inf')
+    price_adult = 0
     quantity_youth = float('inf')
-    price_youth = float('inf')
+    price_youth = 0
     quantity_adolescent = float('inf')
-    price_adolescent = float('inf')
+    price_adolescent = 0
 
     for i in range(len(categories_list)):
         cat_id = categories_list[i][0]
@@ -161,29 +165,33 @@ def table_inv_page():
             for category in categories_list:
                 if category[0] in kids_ids:
                     quantity_kid = min(quantity_kid, category[4])
-                    price_kid += category[3]
+                    price_kid += int(category[3])
             categories_list[i][4] = quantity_kid
+            categories_list[i][3] = price_kid
 
         elif cat_id == 2:
             for category in categories_list:
                 if category[0] in adolescent_ids:
                     quantity_adolescent = min(quantity_adolescent, category[4])
-                    price_adolescent += category[3]
+                    price_adolescent += int(category[3])
             categories_list[i][4] = quantity_adolescent
+            categories_list[i][3] = price_adolescent
 
         elif cat_id == 3:
             for category in categories_list:
                 if category[0] in adult_ids:
                     quantity_adult = min(quantity_adult, category[4])
-                    price_adult += category[3]
+                    price_adult += int(category[3])
             categories_list[i][4] = quantity_adult
+            categories_list[i][3] = price_adult
 
         elif cat_id == 4:
             for category in categories_list:
                 if category[0] in youth_ids:
                     quantity_youth = min(quantity_youth, category[4])
-                    price_youth += category[3]
+                    price_youth += int(category[3])
             categories_list[i][4] = quantity_youth
+            categories_list[i][3] = price_youth
 
     data = [{"id": row[0], "categoria": row[1], "producto": row[2], "precio": f"{int(row[3]):,}".replace(",", "."), "cantidad": row[4]} for row in categories_list]
     return render_template('table_inv.html',data=data)
