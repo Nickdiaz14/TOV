@@ -90,6 +90,21 @@ def charge_page():
 def discharge_page():
     return render_template('discharge.html')
 
+@app.route('/table_guide')
+def table_guide_page():
+    # Aquí podrías obtener los datos de la base de datos
+    connection = connect_db()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+    SELECT * FROM guides
+    ORDER BY id ASC;
+    """)
+
+    output = cursor.fetchall()
+    data = [{"id": row[0], "nombre": row[1]} for row in output]
+    return render_template('table_guide.html',data=data)
+
 @app.route('/table_ped')
 def table_ped_page():
     # Aquí podrías obtener los datos de la base de datos
@@ -304,6 +319,25 @@ def discharge_submit():
         print("Error:", e)
         return jsonify({'success': False})
     
+@app.route("/guardar_guide", methods=["POST"])
+def guardar_guide():
+    datos_actualizados = request.get_json()
+    connection = connect_db()
+    cursor = connection.cursor()
+
+    for dato in datos_actualizados:
+        id = dato['id']
+        nombre = dato['nombre']
+
+        cursor.execute("""
+            UPDATE guides
+            SET name = %s
+            WHERE id = %s;
+        """, (nombre, id))
+    connection.commit()
+    cursor.close()
+    return jsonify({"status": "ok"})
+
 @app.route("/guardar_ped", methods=["POST"])
 def guardar_ped():
     datos_actualizados = request.get_json()
