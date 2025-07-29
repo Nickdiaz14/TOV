@@ -1,0 +1,870 @@
+/* ============================================
+   CONFIGURACIÓN BASE Y FUENTES
+============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Background */
+  --background-color: #100000;
+
+  /* Colores principales */
+  --primary-gradient: #860000;
+  --primary-gradient-text: #ccc;
+  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  --timer-gradient: linear-gradient(135deg, #ffffff 0%, #fffde6 100%);
+  --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+  --success-gradient-nerdle: linear-gradient(135deg, #4ffe60 0%, #009247 100%);
+  --warning-gradient-nerdle: linear-gradient(135deg, #fab370 0%, #ee5a24 100%);
+  --red-gradient: linear-gradient(135deg, #fdd316 0%, #c4a806 100%);
+  --blue-gradient: linear-gradient(135deg, #9b00fb 0%, #5800d4 100%);
+
+  /* Sombras simplificadas */
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-strong: 0 6px 20px rgba(0, 0, 0, 0.2);
+
+  /* Transiciones más rápidas */
+  --transition-fast: all 0.15s ease;
+  --transition-medium: all 0.2s ease;
+
+  /* Bordes redondeados */
+  --radius-small: 8px;
+  --radius-medium: 12px;
+  --radius-large: 16px;
+  --radius-xl: 24px;
+}
+
+/* ============================================
+   TEMA PRINCIPAL (M&B THEME) - OPTIMIZADO
+============================================ */
+body {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  margin: 0;
+  background: var(--background-color);
+  background-attachment: fixed;
+  font-family: "Inter", "Rubik", sans-serif;
+  font-weight: 400;
+  touch-action: manipulation;
+  user-select: none;
+  overflow-x: hidden;
+  /* Optimización de rendering */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Efecto de partículas simplificado */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+h1 {
+  background: var(--primary-gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  transition: var(--transition-fast);
+}
+
+/* Hover simplificado para h1 */
+h1:hover {
+  transform: translateY(-1px);
+}
+
+.logo-gradiente {
+  width: 120px;
+  height: 120px;
+  background: var(--primary-gradient-text);
+  -webkit-mask-image:url('/static/images/logo.png');
+  mask-image: url('/static/images/logo.png');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.button-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  transition: transform 0.2s;
+}
+
+.btn img {
+  width: 30px;
+  height: 30px;
+}
+
+/* Colores de fondo personalizados */
+.home-btn {
+  background-color: #e4417a;
+}
+
+.reload-btn {
+  background-color: #9b3fe7;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+/* ============================================
+   COMPONENTES DE TABLA - OPTIMIZADOS
+============================================ */
+table {
+  border-collapse: separate;
+  border-spacing: 4px;
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-medium);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px;
+  /* Optimización de rendering */
+  will-change: auto;
+}
+
+th {
+  padding: 16px;
+  background: var(--primary-gradient);
+  color: #ffffff;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-small);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  box-shadow: var(--shadow-soft);
+}
+
+td {
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border: none;
+  aspect-ratio: 1 / 1;
+  background: rgba(255, 255, 255, 0.08);
+  transition: var(--transition-fast);
+  padding: 8px;
+  font-size: 40px;
+  font-weight: 600;
+  color: #ffffff;
+  border-radius: var(--radius-small);
+  position: relative;
+  /* Optimización de rendering */
+  will-change: transform;
+}
+
+/* Efecto hover simplificado - SIN el efecto de brillo que era muy pesado */
+td:hover {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: var(--shadow-medium);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+td:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.tipo2 {
+  font-size: 16px;
+  font-weight: 500;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-medium);
+  background: rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  padding: 12px 16px;
+  transition: var(--transition-fast);
+}
+
+
+.tipo2:hover {
+  border-color: rgba(102, 126, 234, 0.5);
+}
+
+/* ============================================
+   REGLAS DE JUEGO - SIMPLIFICADAS
+============================================ */
+.rules-section {
+  margin: 30px 0;
+}
+
+.rules-toggle {
+  background: linear-gradient(145deg, #e8dff5, #d1c4e9);
+  color: #5a4b7a;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 20px;
+}
+
+.rules-toggle:hover {
+  background: linear-gradient(145deg, #d1c4e9, #b39ddb);
+  transform: translateY(-1px);
+}
+
+.rules-content {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #8B7EC8;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 10px;
+  max-width: 600px;
+  text-align: left;
+  box-shadow: var(--shadow-soft);
+  display: none;
+}
+
+/* Animaciones más simples para las reglas */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.rules-content.fade-in {
+  animation: fadeIn 0.2s ease-in forwards;
+}
+
+.rules-content.fade-out {
+  animation: fadeOut 0.2s ease-out forwards;
+}
+
+.rule-item {
+  margin: 8px 0;
+  padding: 12px;
+  background: #f8f5ff;
+  border-left: 4px solid #8B7EC8;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #444;
+  line-height: 1.5;
+}
+
+.rule-number {
+  font-weight: bold;
+  color: #8B7EC8;
+  margin-right: 8px;
+}
+
+/* ============================================
+   ESTADOS DE JUEGO - ANIMACIONES SIMPLIFICADAS
+============================================ */
+.red {
+  background: var(--red-gradient) !important;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.blue {
+  background: var(--blue-gradient) !important;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.lose {
+  background: var(--warning-gradient) !important;
+  box-shadow: 0 2px 8px rgba(250, 112, 154, 0.3);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  /* Shake más suave y rápido */
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+.black {
+  background: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.white {
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%) !important;
+  color: #333333 !important;
+  box-shadow: 0 1px 4px rgba(255, 255, 255, 0.3);
+}
+
+.correct_place {
+  background: var(--success-gradient-nerdle) !important;
+  /* Animación más simple */
+  animation: correctPulse 0.4s ease-in-out;
+}
+
+.correct_character {
+  background: var(--warning-gradient-nerdle) !important;
+  animation: partialPulse 0.4s ease-in-out;
+}
+
+.nowhere {
+  background: #181717a9 !important;
+  /* Sin animación para optimizar */
+}
+
+/* Animaciones más simples y rápidas */
+@keyframes correctPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes partialPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* ============================================
+   BOTONES MODERNOS - OPTIMIZADOS
+============================================ */
+.resolver {
+  height: 60px;
+  width: 240px;
+  display: flex;
+  border-radius: var(--radius-medium);
+  justify-content: center;
+  align-items: center;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Optimización */
+  will-change: transform;
+}
+
+/* Eliminado el efecto de brillo que era muy pesado */
+.resolver:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.resolver:active {
+  transform: translateY(-1px);
+}
+
+.resolver.azulito:hover {
+  background: var(--primary-gradient);
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.resolver.rojito:hover {
+  background: var(--secondary-gradient);
+  box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
+}
+
+.resolver.inicio:hover {
+  background: var(--success-gradient);
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+.resolver.evaluar:hover {
+  background: var(--primary-gradient);
+  box-shadow: 0 4px 15px rgba(250, 112, 154, 0.3);
+}
+
+.resolver.inicio,
+.resolver.evaluar {
+  width: 140px;
+  height: 48px;
+  font-size: 14px;
+}
+
+/* ============================================
+   CONTENEDORES Y LAYOUTS
+============================================ */
+.container {
+  width: 100vw;
+  height: 100vh;
+  background: var(--background-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 20px;
+  max-width: 1200px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+  justify-items: center;
+  max-width: 800px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.botones {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.contenedor {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.punto {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  transition: var(--transition-fast);
+  box-shadow: var(--shadow-soft);
+}
+
+.punto:hover {
+  transform: scale(1.1);
+}
+
+/* ============================================
+   ELEMENTOS BLOQUEADOS
+============================================ */
+.locked {
+  pointer-events: none;
+}
+
+.blocked {
+  pointer-events: none;
+  position: relative;
+}
+
+.blocked::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 1;
+  /* Eliminadas las propiedades de animación que no se usaban */
+}
+
+.red.blocked::before,
+.blue.blocked::before {
+  background-image: url('/static/images/logo_M&B.png');
+  display: block;
+  filter: opacity(0.3);
+  width: 80%;
+  height: 80%;
+}
+
+.black.blocked::before,
+.white.blocked::before {
+  background-image: url('/static/images/knight.png');
+  width: 70%;
+  height: 70%;
+}
+
+/* ============================================
+   COUNTDOWN Y OVERLAYS - OPTIMIZADOS
+============================================ */
+#countdown-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%);
+  backdrop-filter: blur(10px); /* Reducido el blur */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 15vw;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  z-index: 1000;
+}
+
+#countdown {
+  background: var(--primary-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Animación más suave */
+  animation: countdownPulse 0.8s ease-in-out infinite;
+}
+
+@keyframes countdownPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+/* ============================================
+   TIMER - OPTIMIZADO
+============================================ */
+#timer {
+  font-size: 2rem;
+  font-weight: 700;
+  background: var(--timer-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Eliminada la transición para evitar lag en el timer */
+}
+
+/* ============================================
+   CONFETTI OPTIMIZADO
+============================================ */
+@keyframes confetti-slow {
+  0% { transform: translate3d(0, 0, 0) rotateX(0) rotateY(0); }
+  100% { transform: translate3d(0, 105vh, 0) rotateX(360deg) rotateY(180deg); }
+}
+
+@keyframes confetti-medium {
+  0% { transform: translate3d(0, 0, 0) rotateX(0) rotateY(0); }
+  100% { transform: translate3d(50px, 105vh, 0) rotateX(100deg) rotateY(360deg); }
+}
+
+@keyframes confetti-fast {
+  0% { transform: translate3d(0, 0, 0) rotateX(0) rotateY(0); }
+  100% { transform: translate3d(-50px, 105vh, 0) rotateX(10deg) rotateY(250deg); }
+}
+
+.confetti-container {
+  perspective: 1000px;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.confetti {
+  position: absolute;
+  z-index: 1;
+  width: 6px;
+  height: 6px;
+  border-radius: 0%;
+  top: 0;
+  left: 50%;
+  animation-fill-mode: forwards;
+}
+
+.confetti--animation-slow {
+  animation: confetti-slow 3.25s linear 1 forwards;
+}
+
+.confetti--animation-medium {
+  animation: confetti-medium 2.75s linear 1 forwards;
+}
+
+.confetti--animation-fast {
+  animation: confetti-fast 2.25s linear 1 forwards;
+}
+
+/* ============================================
+   CHECKMARK SIMPLIFICADO
+============================================ */
+.checkmark-circle {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  margin: 20px auto;
+}
+
+.checkmark-circle .background {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--success-gradient);
+  position: absolute;
+  box-shadow: var(--shadow-medium);
+  animation: checkmarkAppear 0.4s ease-out;
+}
+
+@keyframes checkmarkAppear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.checkmark-circle .checkmark.draw:after {
+  animation: checkmark 1.5s ease-in-out forwards;
+  animation-delay: 0.3s;
+}
+
+.checkmark-circle .checkmark:after {
+  opacity: 0;
+  height: 60px;
+  width: 30px;
+  transform-origin: left top;
+  border-right: 4px solid white;
+  border-top: 4px solid white;
+  border-radius: 2px;
+  content: '';
+  left: 20px;
+  top: 60px;
+  position: absolute;
+  transform: scaleX(-1) rotate(135deg);
+}
+
+@keyframes checkmark {
+  0% {
+    height: 0;
+    width: 0;
+    opacity: 1;
+  }
+  25% {
+    height: 0;
+    width: 30px;
+    opacity: 1;
+  }
+  50% {
+    height: 60px;
+    width: 30px;
+    opacity: 1;
+  }
+  100% {
+    height: 60px;
+    width: 30px;
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   TEMA CLARO - OPTIMIZADO
+============================================ */
+body.light-theme {
+  --background-color: linear-gradient(135deg, #f6d795bd 0%, #fffeee 50%, #f6d795bd 100%); 
+  height: 100%;
+  background: var(--background-color);
+  color: #333333;
+  --timer-gradient: linear-gradient(135deg, #5b5b5b 0%, #2a2a2a 100%);
+  --red-gradient: linear-gradient(135deg, #d76305 0%, #ff0606 100%);
+  --blue-gradient: linear-gradient(135deg, #9870d0 0%, #0053fb 100%);
+  --primary-gradient-text: linear-gradient(135deg, #4960c8 0%, #593281 100%);
+}
+
+body.light-theme::before {
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(252, 182, 159, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 236, 210, 0.15) 0%, transparent 50%);
+}
+
+body.light-theme h1 {
+  background: var(--primary-gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.light-theme th {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+}
+
+body.light-theme td {
+  background: rgba(255, 255, 255, 0.7);
+  color: #333333;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .tipo2 {
+  background: #fffeee;
+  color: #333333;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .resolver {
+  background: rgba(255, 255, 255, 0.8);
+  color: #333333;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .resolver:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+body.light-theme #timer {
+  font-size: 2rem;
+  font-weight: 700;
+  background: var(--timer-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.light-theme .nowhere {
+  background: #6464644d !important;
+  /* Sin animación para optimizar */
+}
+
+body.light-theme .red {
+  background: var(--red-gradient) !important;
+  box-shadow: 0 2px 8px rgba(255, 168, 8, 0.3);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+body.light-theme .blue {
+  background: var(--blue-gradient) !important;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+
+body.light-theme .logo-gradiente {
+  width: 120px;
+  height: 120px;
+  background: var(--primary-gradient-text);
+  -webkit-mask-image:url('/static/images/logo_M&B.png');
+  mask-image: url('/static/images/logo_M&B.png');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+/* ============================================
+   TEMA OSCURO - OPTIMIZADO
+============================================ */
+body.dark-theme {
+  --background-color: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 50%, #0f0f0f 100%);
+  height: 100%;
+  background: var(--background-color);
+  --red-gradient: linear-gradient(135deg, #fdd316 0%, #c4a806 100%);
+  --blue-gradient: linear-gradient(135deg, #9870d0 0%, #0053fb 100%);
+}
+
+body.dark-theme::before {
+  background-image:
+    radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.03) 0%, transparent 50%);
+}
+
+body.dark-theme .red {
+  background: var(--red-gradient) !important;
+  box-shadow: 0 2px 8px rgba(255, 168, 8, 0.3);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+body.dark-theme .blue {
+  background: var(--blue-gradient) !important;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+============================================ */
+@media (max-width: 1024px) {
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0 auto;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 0.3fr);
+    gap: 10px;
+    justify-items: center;
+    max-width: 1000px;
+    padding: 5px;
+  }
+} 

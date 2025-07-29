@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tabla editable</title>
+
+    <!-- CSS de DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Tu CSS personalizado -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <style>
+        td.editable {
+            background-color: #f2f2f2;
+        }
+        .dataTables_filter input {
+            background-color: #222;
+            color: #eee;
+            border: 1px solid #555;
+        }
+
+        /* 📦 Selector de cantidad */
+        .dataTables_length select {
+            background-color: #222;
+            color: #eee;
+            border: 1px solid #555;
+        }
+
+        /* 🔢 Textos pequeños de paginación y resumen */
+        .dataTables_info, .dataTables_paginate, .dataTables_length label, .dataTables_filter label {
+            color: #ccc;
+        }
+
+        /* ⏮ Botones de paginación */
+        .dataTables_paginate .paginate_button {
+            background-color: #333;
+            color: #eee !important;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin: 0 2px;
+        }
+
+        .dataTables_paginate .paginate_button.current {
+            background-color: #860000 !important;
+            color: white !important;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button{
+            color: white !important;
+        }
+        .dataTables_info {
+            font-size: 14px;
+            color: #ccc !important;
+        }
+    </style>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+
+<h1>Tabla de Registros</h1>
+<table id="tabla" class="display">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre Guia</th>
+            <th>Fecha</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Valor</th>
+            <th>Entregado</th>
+            <th>Pagado</th>
+            <th>Cargado</th>
+            <th>Consignado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+        <tr>
+            <td class="tipo2">{{ row.id }}</td>
+            <td class="tipo2" style="text-align: left;">{{ row.nombre }}</td>
+            <td class="tipo2">{{ row.fecha }}</td>
+            <td class="tipo2" style="text-align: left;">{{ row.producto }}</td>
+            <td class="tipo2" style="text-align: right;">{{ row.cantidad }}</td>
+            <td class="tipo2" style="text-align: right;">$ {{ row.precio }}</td>
+            <td contenteditable="true" class="editable" style="background-color: rgba(0, 0, 0, 0.3); font-size: 16px;border: 2px solid rgba(255, 255, 255, 0.2);">{{ row.entregado }}</td>
+            <td contenteditable="true" class="editable" style="background-color: rgba(0, 0, 0, 0.3); font-size: 16px;border: 2px solid rgba(255, 255, 255, 0.2);">{{ row.pagado }}</td>
+            <td contenteditable="true" class="editable" style="background-color: rgba(0, 0, 0, 0.3); font-size: 16px;border: 2px solid rgba(255, 255, 255, 0.2);">{{ row.cargado }}</td>
+            <td contenteditable="true" class="editable" style="background-color: rgba(0, 0, 0, 0.3); font-size: 16px;border: 2px solid rgba(255, 255, 255, 0.2);">{{ row.consignado }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="botones">
+    <button id="guardar" class="resolver azulito">Guardar</button>
+</div>
+<script>
+$(document).ready(function() {
+    $('#tabla').DataTable();
+
+    $("#guardar").click(function() {
+        let datos = [];
+        $("#tabla tbody tr").each(function() {
+            const tds = $(this).find("td");
+            datos.push({
+                id: parseInt($(tds[0]).text()),
+                nombre: $(tds[1]).text(),
+                fecha: $(tds[2]).text(),
+                producto: $(tds[3]).text(),
+                cantidad: parseInt($(tds[4]).text()),
+                valor: $(tds[5]).text(),
+                entregado: $(tds[6]).text(),
+                pagado: $(tds[7]).text(),
+                cargado: $(tds[8]).text(),
+                consignado: $(tds[9]).text()
+            });
+        });
+
+        $.ajax({
+            url: "/guardar_ped",
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(datos),
+            success: function(res) {
+                alert("Datos guardados correctamente");
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>

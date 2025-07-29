@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width height=device-height, initial-scale=0.7">
+    <title>Descargue</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: #100000;
+            font-family: "Rubik", sans-serif;
+            box-sizing: border-box;
+            touch-action: manipulation;
+            user-select: none;
+        }
+
+        h1 {
+            color: #ffffff;
+            margin-bottom: 20px;
+        }
+
+        .background-logo {
+            pointer-events: none;
+            animation: float 10s ease-in-out infinite;
+            position: absolute;
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        form {
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            width: 80%;
+            max-height: 76vh;
+            overflow-y: auto;
+        }
+
+        form::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        form::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        form::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+        }
+
+        form::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        label {
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        .opcion-multiple select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            background-color: white;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+        }
+
+        .opcion-multiple {
+            margin: 10px 0;
+            position: relative;
+        }
+
+        .opcion-multiple input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #00d4ff;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        textarea {
+            width: 98%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            border: 2px solid #4a4949;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        label.titulo-pregunta {
+            font-weight: bold;
+            font-size: 1.2em;
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button {
+            background-color: #00c09d;
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            margin-top: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #2ca893;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            font-size: 15vw;
+            font-family: 'Rubik', sans-serif;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="overlay">
+        <label id="overlay-label" style="font-size: 33px; margin-bottom: 20px; text-align: center;"></label>
+        <div id="overlay-buttons"></div>
+    </div>
+
+    <h1 style="font-size: 6vw; text-align: center; white-space: nowrap;">Descargue de información</h1>
+    <h1 id="title" style="font-size: 20px; text-align: center; white-space: nowrap;"></h1>
+
+    <form id="your-form-id" onsubmit="submitForm(event)" style="margin-bottom: 10px;">
+
+        <label class="titulo-pregunta">Seleccione un(a) guía <span style="color: red;">*</span></label>
+        <div class="opcion-multiple">
+            <select name="guia" id="guia" required class="opcion-multiple">
+                <option value="" disabled selected>Seleccione una opción</option>
+            </select>
+        </div>
+
+        <label class="titulo-pregunta">Seleccione una categoría <span style="color: red;">*</span></label>
+        <div class="opcion-multiple">
+            <select name="categoria" id="categoria" required class="opcion-multiple">
+                <option value="" disabled selected>Seleccione una opción</option>
+            </select>
+        </div>
+
+        <label class="titulo-pregunta">Seleccione un producto <span style="color: red;">*</span></label>
+        <div class="opcion-multiple">
+            <select name="producto" id="producto" required class="opcion-multiple">
+                <option value="" disabled selected>Seleccione una categoría primero</option>
+            </select>
+        </div>
+
+        <label class="titulo-pregunta">Valor unitario</label>
+        <div class="opcion-multiple" style="pointer-events: none;">
+            <input type="text" name="valor_unitario" id="valor_unitario" required><br>
+        </div>
+
+        <label class="titulo-pregunta">Cantidad <span style="color: red;">*</span></label>
+        <input type="number" name="cantidad" id="cantidad" min="1" value="1" required placeholder="Ingrese la cantidad" oninput="handleCantidadChange()"><br>
+
+        <label class="titulo-pregunta">Valor total</label>
+        <div class="opcion-multiple" style="pointer-events: none;">
+            <input type="text" name="valor_total" id="valor_total" required><br>
+        </div>
+
+        <button id="enviar" type="submit">Enviar</button>
+    </form>
+
+    <script>
+        let overlay = document.getElementById('overlay');
+        overlay.style.display = "none";
+        let categories;
+        let guides;
+        let categories_list;
+        let price;
+        let quantity;
+        
+        const selectCategoria = document.getElementById('categoria');
+        const selectProducto = document.getElementById('producto');
+        const selectPrecio = document.getElementById('valor_unitario');
+        const selectCantidad = document.getElementById('cantidad');
+        const selectGuia = document.getElementById('guia');
+        const selectTotal = document.getElementById('valor_total');
+
+        function handleProductoChange() {
+            const productoSeleccionado = selectProducto.value;
+            categories_list.forEach(producto => {
+                if (`${producto[0]}` === `${productoSeleccionado}`) {
+                    price = producto[3];
+                    quantity = producto[4];
+                }
+            });
+            selectPrecio.value = `$ ${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+            selectTotal.value = `$ ${(price * selectCantidad.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+            if (quantity === 0) {
+                alert('No hay disponibilidad para este producto');
+            }
+        }
+
+        function handleCantidadChange() {
+            const cantidadSeleccionada = selectCantidad.value;
+            if (cantidadSeleccionada > parseInt(quantity)) {
+                alert(`La cantidad máxima disponible es ${quantity}`);
+                selectCantidad.value = quantity; // Limita automáticamente al máximo permitido
+                selectTotal.value = `$ ${(price * quantity).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+            } else if (cantidadSeleccionada && cantidadSeleccionada > 0) {
+                const total = price * cantidadSeleccionada;
+                selectTotal.value = `$ ${total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+            } else {
+                selectTotal.value = `$ 0`;
+            }
+        }
+        // Función para manejar el cambio de categoría
+        function handleCategoriaChange() {
+            const categoriaSeleccionada = selectCategoria.value;
+            
+            // Limpiar el select de productos
+            selectProducto.innerHTML = '<option value="" disabled selected>Seleccione un producto</option>';
+            
+            // Verificar si existe la categoría en categories_list
+            if (categories_list) {
+                categories_list.forEach(producto => {
+                    if (`${producto[2]}` === `${categoriaSeleccionada}`) {
+                        const option = document.createElement('option');
+                        price = producto[3]; 
+                        quantity = producto[4];
+                        option.value = producto[0]; 
+                        option.textContent = producto[1];
+                        selectProducto.appendChild(option);
+                    }
+                });
+            } else {
+                console.log('No se encontraron productos para la categoría:', categoriaSeleccionada);
+            }
+        }
+
+        // Cargar datos del servidor
+        fetch("/get_info")
+            .then(response => response.json())
+            .then(json => {
+                console.log('Datos recibidos:', json);
+                
+                // Acceder a categories y categories_list desde el JSON
+                categories = json.categories;
+                categories_list = json.categories_list;
+                guides = json.guides;
+
+                // Poblar el select de categorías
+                categories.forEach(categoria => {
+                    const option = document.createElement('option');
+                    option.value = categoria[0];
+                    option.textContent = categoria[1];
+                    selectCategoria.appendChild(option);
+                });
+
+                // Poblar el select de guias
+                guides.forEach(guide => {
+                    const option = document.createElement('option');
+                    option.value = guide[0];
+                    option.textContent = guide[1];
+                    selectGuia.appendChild(option);
+                });
+                
+                // Agregar el event listener DESPUÉS de cargar los datos
+                selectCategoria.addEventListener('change', handleCategoriaChange);
+                selectProducto.addEventListener('change', handleProductoChange);
+                selectCantidad.addEventListener('change', handleCantidadChange);
+            })
+            .catch(error => {
+                console.error('Error al cargar los datos:', error);
+            });
+
+        async function submitForm(event) {
+            event.preventDefault();
+            const submitButton = document.getElementById('enviar');
+            submitButton.textContent = 'Enviando...';
+            submitButton.style.backgroundColor = '#ccc';
+            submitButton.disabled = true;
+
+            const formData = new FormData(event.target);
+
+            try {
+                const response = await fetch('/discharge/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                overlay.style.display = 'flex';
+                const overlayLabel = document.getElementById('overlay-label');
+                const overlayButtons = document.getElementById('overlay-buttons');
+
+                if (result.success) {
+                    overlayLabel.innerHTML = 'Información cargada correctamente.<br>¿Desea cargar otro registro?';
+                    overlayButtons.innerHTML = `
+                        <button onclick="location.href='/discharge'" class="resolver azulito" style="font-size: 20px; font-weight: bold; margin-top: 20px;">Nuevo Registro</button>
+                    `;
+                } else {
+                    overlayLabel.textContent = 'Se produjo un error, intente nuevamente.';
+                    overlayButtons.innerHTML = '';
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                }
+            } catch (error) {
+                console.error('Error al enviar el formulario:', error);
+                overlay.style.display = 'flex';
+                const overlayLabel = document.getElementById('overlay-label');
+                overlayLabel.textContent = 'Se produjo un error de conexión, intente nuevamente.';
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.6">
+    <title>Menu</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="logo-gradiente" style="margin-bottom: 20px;"></div>
+    <div style="text-align:center; display: block;">
+        <div class="botones">
+            <button data-url="/charge" class="resolver azulito" style="width: 150px;">Cargue</button>
+            <button data-url="/discharge" class="resolver azulito" style="width: 150px;">Descargue</button>
+            <button data-url="/add" class="resolver azulito" style="width: 150px;">Añadir guia</button>
+        </div>
+        <div class="botones">
+            <button data-url="/table_ped" class="resolver azulito" style="width: 150px;">Pedidos</button>
+            <button data-url="/table_inv" class="resolver azulito" style="width: 150px;">Inventario</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.resolver');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const url = this.getAttribute('data-url');
+                    window.location.href = url;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
