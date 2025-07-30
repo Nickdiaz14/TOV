@@ -132,7 +132,7 @@ def table_ped_page():
     """)
 
     output = cursor.fetchall()
-    data = [{"id": row[0], "nombre": row[1], "fecha": row[2], "producto": row[3], "cantidad": row[4], "precio": f"{int(row[5]):,}".replace(",", "."), "entregado": "" if row[6] == False else "X", "pagado": "" if row[7] == False else "X", "cargado": "" if row[8] == False else "X", "consignado": "" if row[8] == False else "X"} for row in output]
+    data = [{"id": row[0], "nombre": row[1], "fecha": row[2], "producto": row[3], "cantidad": row[4], "precio": f"{int(row[5]):,}".replace(",", "."), "entregado": "" if row[6] == False else "X", "pagado": "" if row[7] == False else "X", "cargado": "" if row[8] == False else "X", "consignado": "" if row[9] == False else "X"} for row in output]
     return render_template('table_ped.html',data=data)
 
 @app.route('/table_inv')
